@@ -2,9 +2,6 @@ class AppConstants {
   static const String appName = 'Jain-Insta';
   static const int appVersion = 1;
 
-  /*
-Shared Pref
-  */
   static const String apiKey = 'apiKey';
   static const String fontFamilyOswald = "Oswald";
   static const String fontFamilyOxygen = "Oxygen";
@@ -110,13 +107,40 @@ Shared Pref
   static const String validEmail = "Please enter valid email";
   static const String errorFullName = "Please enter full name";
   static const String errorUserName = "Please enter user name";
-
   static get validPwdField =>
       "kindly use a mix of upper and lowercase \nletters,numbers, symbols and minimum \n6 characters length";
   static const String errorPassword = "Please enter password";
   static const String errorNewPassword = "Please enter new password";
   static const String errorConfirmPassword = "Please enter confirm password";
   static const String errorBio = "Please enter bio";
+
+
+
+  static const String errorBreed = "Please enter dog's breed";
+  static const String errorDogName = "Please enter dog's name";
+  static const String errorDogAge = "Please enter dog's age";
+  static const String errorDogAchievements = "Please enter dog's achievements";
+  static const String errorSelectTrainer = "Please select trainer";
+  static const String errorDogPRiceWithTrainer = "Please enter dog's price with trainer";
+  static const String errorDogPRiceWithoutTrainer = "Please enter dog's price without trainer";
+
+
+
+
+//trainer
+  static const String errorTrainerName = "Please enter trainers name";
+  static const String errorTrainerSpecialization = "Please enter trainers specialization";
+
+ static const String errorTrainer = "Please enter trainers name";
+  static const String errorTrainerDetails = "Please enter trainers details";
+  static const String errorTrainerAchievements = "Please enter trainers achievements";
+  static const String errorTrainerExperience = "Please enter trainers experience in years";
+
+
+
+
+
+
 
   static get otpDesc =>
       "Enter the verification number\nwhich you have received by EMAIL.";

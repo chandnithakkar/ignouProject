@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import '../../controllers/login_controller.dart';
 import '../../route/app_pages.dart';
 import '../../utils/app_colors.dart';
@@ -22,6 +23,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final LoginController _loginController = Get.put((LoginController()));
   bool obscureText = true;
+  String errorMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: 15.sp, vertical: 0.sp),
-                  child: InkWell(
+                child: InkWell(
                   onTap: () {
                     Get.toNamed(Routes.registration,
                         arguments: {"isfrom": "signin"});
@@ -120,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       hintText: "",
                                       enableInteractiveSelection: false,
                                       enabled: false,
-                                      /*   controller: _registerController
+                                      /*   controller: _loginController
                                           .countryCodeController,
                                    */
                                       labelText: "+91",
@@ -145,9 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 flex: 3,
                                 child: GetTextFormField(
                                   isObscureText: false,
-                                  /*  controller:
-                                      _registerController.phoneNoController,
-                                */
+                                  controller: _loginController.phoneController,
                                   hintText: "Enter Phone Number",
                                   labelText: "Phone Number",
                                   autovalidateMode:
@@ -169,63 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ],
                           ),
-
-/*
-                          GetTextFormField(
-                            isObscureText: false,
-                            hintText: "Enter username or email address",
-                            labelText: "Username",
-                            controller: _loginController.emailController,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                              if (value != null) {
-                                if (value.isEmpty) {
-                                  return AppConstants.errorEmail;
-                                }
-                              }
-
-                              */
-/*  if(!Utils.isEmail(value.toString())){
-                                              return AppConstants.validEmail;
-                                            }*/ /*
-
-                              return null;
-                            },
-                          ),
-*/
-                          U.addVerBox(size: 10),
-                          GetTextFormField(
-                            isObscureText: obscureText,
-                            hintText: "Enter Password",
-                            labelText: "Password",
-                            controller: _loginController.passwordController,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                              if (value != null) {
-                                if (value.isEmpty) {
-                                  return AppConstants.errorPassword;
-                                }
-                              }
-
-                              return null;
-                            },
-                            passwordButton: IconButton(
-                              icon: Icon(
-                                obscureText
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: CC.primaryColor,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  obscureText = !obscureText;
-                                });
-                              },
-                            ),
-                          ),
-                          U.addVerBox(size: 16),
+                          U.addVerBox(size: 20),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 60.sp),
                             child: CommanFormButton(
@@ -235,6 +179,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               loadingText: "Please wait",
                               callback: () {
                                 FocusManager.instance.primaryFocus?.unfocus();
+                                generateOtp(
+                                    "+91" +
+                                        _loginController.phoneController.text,
+                                    context);
                                 //_loginController.validate(context);
                                 /* setState(() {
                                                 isLoading = true;
@@ -249,11 +197,93 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                             ),
                           ),
+                          U.addVerBox(size: 20),
+                          GestureDetector(
+                            onTap: () {
+                              Get.toNamed(Routes.adminLogin);
+                            },
+                            child: Text(
+                              "Admin Login",
+                              style: St.textFontRegular(
+                                  color: CC.primaryColor,
+                                  size: 16.sp,
+                                  weight: FontWeight.w400),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
                         ],
                       ),
                     ))))));
 /*
     });
 */
+  }
+
+  Future<void> generateOtp(String contact, BuildContext context) async {
+    try {
+      await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: contact,
+        verificationCompleted: (PhoneAuthCredential credential) {
+          _loginController.isLoading.value = false;
+          print("credentials ------------------------->");
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          _loginController.isLoading.value = false;
+          print(" FirebaseAuthException------------------------->");
+        },
+        timeout: const Duration(seconds: 60),
+        codeSent: (String verificationId, int? resendToken) async {
+          _loginController.isLoading.value = false;
+          print(" verificationId------------------------->");
+          var result = await Get.toNamed(Routes.verifyOtp,
+              arguments: {"credentials": verificationId, "contact": contact});
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          _loginController.isLoading.value = false;
+          print(" codeAutoRetrievalTimeout------------------------->");
+        },
+      );
+    } catch (e) {
+      _loginController.isLoading.value = false;
+      handleError(e as PlatformException, context);
+      // Navigator.pop(context, (e as PlatformException).message);
+    }
+  }
+
+  void handleError(PlatformException error, BuildContext context) {
+    switch (error.code) {
+      case 'ERROR_INVALID_VERIFICATION_CODE':
+        FocusScope.of(context).requestFocus(FocusNode());
+        errorMessage = 'Invalid Code';
+        showAlertDialog(context, 'Invalid Code');
+        break;
+      default:
+        showAlertDialog(context, error.message ?? "");
+        break;
+    }
+  }
+
+  void showAlertDialog(BuildContext context, String message) {
+    // set up the AlertDialog
+    final CupertinoAlertDialog alert = CupertinoAlertDialog(
+      title: const Text('Error'),
+      content: Text('\n$message'),
+      actions: <Widget>[
+        CupertinoDialogAction(
+          isDefaultAction: true,
+          child: const Text('Ok'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        )
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

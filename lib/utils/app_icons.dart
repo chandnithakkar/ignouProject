@@ -1,6 +1,6 @@
 class AppIcons {
   // SVG
-  static const String splash1 = 'assets/images/splash1.png';
+  static const String splash1 = 'assets/images/ignou.png';
 
   static const String camera = 'assets/images/camera.svg';
   static const String gallery = 'assets/images/gallery.svg';
@@ -72,5 +72,11 @@ class AppIcons {
   static const String tagFriendImg = 'assets/images/tagFriend.svg';
   static const String locationImg = 'assets/images/location.svg';
   static const String refreshImg = 'assets/images/refresh.svg';
+  static const String drawer_head = 'assets/images/drawer_head.jpg';
+
+
+  static const String dog_training1 = 'assets/images/dog_training1.jpg';
+  static const String dog_training2 = 'assets/images/dog_training2.jpg';
+  static const String dog_training3 = 'assets/images/dog_training3.jpg';
 
 }

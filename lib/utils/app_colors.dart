@@ -20,11 +20,14 @@ class CC {
   static const bgTransColor = Color(0xFFfdfdfe);
   static const redColor = Color(0xFFD9534F);
 
-  //#fdfdfe
-
+/*  //#fdfdfe
   static const primaryColor = Color(0xFF83368D);
   static const secondaryColor = Color(0xFFCA2383);
-  static const thirdColor = Color(0xFFEA3D68);
+  static const thirdColor = Color(0xFFEA3D68);*/
+  //#fdfdfe
+  static const primaryColor = Color(0xFF5942E0);
+  static const secondaryColor = Color(0xFF7A4CEF);
+  static const thirdColor = Color(0xFF3DA8EA);
 
   static const black = Colors.black;
   static const blue = Color(0xFF102EC6);

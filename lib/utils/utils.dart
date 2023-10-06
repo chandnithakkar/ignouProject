@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class U {
   static loader(context) {
@@ -21,14 +22,51 @@ class U {
       ),
     );
   }
+  static showToast(message) => Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 15.0);
 
+  static addSmallGap10() {
+    return SizedBox(
+      height: 10.sp,
+    );
+  }
+
+  static addSmallGap5() {
+    return SizedBox(
+      height: 5,
+    );
+  }
+
+  static addGap15() {
+    return SizedBox(
+      height: 15.sp,
+    );
+  }
+
+  static addMediumGap() {
+    return SizedBox(
+      height: 20.sp,
+    );
+  }
+
+  static addGap(int size) {
+    return SizedBox(
+      height: size.sp,
+    );
+  }
   static addVerBox({double size = 10}) {
     return SizedBox(
       height: size.sp,
     );
   }
 
-  static addHorBox({size = 10}) {
+  static addHorBox({size = 10.0}) {
     return SizedBox(
       width: size.sp,
     );
