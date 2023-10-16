@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:firebase_database/firebase_database.dart';
 
+import '../../model/dog.dart';
+import '../../model/trainer.dart';
 import '../../route/app_pages.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_icons.dart';
 import '../../utils/font_styles.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../../utils/utils.dart';
+import 'dogs_details.dart';
 
 class UserDashboard extends StatefulWidget {
   UserDashboard({Key? key}) : super(key: key);
@@ -75,7 +79,7 @@ class _UserMenuScreenState extends State<UserMenuScreen> {
                 child: Column(
                   children: [
                     ListTile(
-                      title: Text("Book Services"),
+                        title: Text("Book Services"),
                       onTap: () {
                         Get.toNamed(Routes.addDogScreen);
                         // Handle Add Dog action
@@ -125,36 +129,80 @@ class _MainScreenState extends State<MainScreen> {
   final MyDrawerController _myDrawerController = Get.put(MyDrawerController());
   var _current = 0.obs;
   final CarouselController _controller = CarouselController();
+  var dogsList=<Dog>[].obs;
+  var trainersList=<Trainer>[].obs;
+  var dropDownDogsService = <String>["Army", "Sniffer", "Guide","Other"].obs;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  getData() async {
+    dogsList.value= await getDogList();
+    trainersList.value= await getTrainerList();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Text(
-          "Dashboard",
-          style: St.textFontRegular(
-              size: 14.sp, weight: FontWeight.w500, color: CC.black),
-        ),
-        leading: GestureDetector(
-            onTap: _myDrawerController.toggleDrawer,
-            child: Icon(
-              Icons.density_medium_sharp,
-              size: 20.sp,
-              color: Colors.blue,
-            )),
-      ),
-      body: Container(
-        color: Colors.white,
-        child: Column(
-          children: [
-            U.addGap(20),
-            CouroselWidget(),
-            Dots(),
-          ],
-        ),
-      ),
+    return Obx(() {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            title: Text(
+              "Dashboard",
+              style: St.textFontRegular(
+                  size: 14.sp, weight: FontWeight.w500, color: CC.black),
+            ),
+            leading: GestureDetector(
+                onTap: _myDrawerController.toggleDrawer,
+                child: Icon(
+                  Icons.density_medium_sharp,
+                  size: 20.sp,
+                  color: Colors.blue,
+                )),
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      U.addGap(20),
+                      CouroselWidget(),
+                      Dots(),
+                      DogsList(),
+                      U.addGap(20),
+                      Divider(
+                        color: Colors.black38,
+                        height: 2,
+                      ),
+                      U.addGap(20),
+                      TrainersList(),
+                      U.addGap(20),
+                      Divider(
+                        color: Colors.black38,
+                        height: 2,
+                      ),
+                      U.addGap(20),
+                      ServiceList(),
+                      U.addGap(20),
+                      Divider(
+                        color: Colors.black38,
+                        height: 2,
+                      ),
+                      U.addGap(20),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      }
     );
   }
 
@@ -228,6 +276,278 @@ class _MainScreenState extends State<MainScreen> {
       );
     });
   }
+
+  Future<List<Dog>> getDogList() async {
+    final databaseReference = FirebaseDatabase.instance.ref('dog');
+    final snapshot = await databaseReference.get();
+    final dogs = <Dog>[];
+
+    if (snapshot != null && snapshot.value != null) {
+      final data = snapshot.value as Map<dynamic, dynamic>;
+
+      // Transform the data into the expected format
+      final transformedData = transformDogsFirebaseData(data);
+
+      // Deserialize and add each dog entry to the list
+      for (final entry in transformedData.entries) {
+        try {
+          final dog = Dog.fromJson(entry.value);
+          dogs.add(dog);
+
+        } catch (e) {
+          print('Error parsing dog data: $e');
+        }
+      }
+    } else {
+      print('No data available from Firebase');
+    }
+    return dogs;
+  }
+
+  Future<List<Trainer>> getTrainerList() async {
+    final databaseReference = FirebaseDatabase.instance.ref('trainer');
+    final snapshot = await databaseReference.get();
+    final trainers = <Trainer>[];
+
+    if (snapshot != null && snapshot.value != null) {
+      final data = snapshot.value as Map<dynamic, dynamic>;
+
+      // Transform the data into the expected format
+      final transformedData = transformTrainersFirebaseData(data);
+
+      // Deserialize and add each dog entry to the list
+      for (final entry in transformedData.entries) {
+        try {
+          final trainer = Trainer.fromJson(entry.value);
+          trainers.add(trainer);
+        } catch (e) {
+          print('Error parsing trainer data: $e');
+        }
+      }
+    } else {
+      print('No data available from Firebase');
+    }
+    return trainers;
+  }
+
+  Map<dynamic, dynamic> transformDogsFirebaseData(Map<dynamic, dynamic> data) {
+
+    final transformedData = <dynamic, dynamic>{};
+
+    data.forEach((key, value) {
+      if (value is Map<dynamic, dynamic>) {
+        final dogData = {
+          'dogAchievements': value['dogAchievements'],
+          'dogAge': value['dogAge'],
+          'dogPriceWTrainer': value['dogPriceWTrainer'],
+          'dogPriceWoutTrainer': value['dogPriceWoutTrainer'],
+          'dogBreed': value['dogBreed'],
+          'dogName': value['dogName'],
+          'trainerId': value['trainerId'],
+        };
+        transformedData[key] = dogData;
+      }
+    });
+
+    return transformedData;
+  }
+
+  Map<dynamic, dynamic> transformTrainersFirebaseData(Map<dynamic, dynamic> data) {
+
+    final transformedData = <dynamic, dynamic>{};
+
+    data.forEach((key, value) {
+      if (value is Map<dynamic, dynamic>) {
+        final trainerData = {
+          'trainerAchievements': value['trainerAchievements'],
+          'trainerDetails': value['trainerDetails'],
+          'trainerExperience': value['trainerExperience'],
+          'trainerName': value['trainerName'],
+          'trainerSpecialization': value['trainerSpecialization'],
+          'trainerId': value['trainerId'],
+        };
+        transformedData[key] = trainerData;
+      }
+    });
+    return transformedData;
+  }
+
+  Widget DogsList(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Dogs',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: (){
+                  Get.toNamed(Routes.DogsList);
+                },
+                child: Text(
+                 "See All",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black, // Customize text color
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: 100, // Adjust the height as needed
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: dogsList.value.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: (){
+                  Get.to(()=> DogDetailsScreen(dog: dogsList.value[index],));
+                },
+                child: Container(
+                  width: 150, // Adjust the width as needed
+                  margin: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      gradient: LinearGradient(
+                        colors: [CC.primaryColor, CC.secondaryColor, CC.thirdColor],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      )
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        dogsList.value[index].dogName??"",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white, // Customize text color
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget TrainersList(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Trainers',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Container(
+          height: 100, // Adjust the height as needed
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: trainersList.value.length,
+            itemBuilder: (context, index) {
+              return Container(
+                width: 150, // Adjust the width as needed
+                margin: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    gradient: LinearGradient(
+                      colors: [CC.primaryColor, CC.secondaryColor, CC.thirdColor],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    )
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      trainersList.value[index].trainerName,
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white, // Customize text color
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget ServiceList(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Services',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Container(
+          height: 100, // Adjust the height as needed
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount:  dropDownDogsService.value.length,
+            itemBuilder: (context, index) {
+              return Container(
+                width: 150, // Adjust the width as needed
+                margin: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    gradient: LinearGradient(
+                      colors: [CC.primaryColor, CC.secondaryColor, CC.thirdColor],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    )
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      dropDownDogsService.value[index],
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white, // Customize text color
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
 }
 
 class MyDrawerController extends GetxController {

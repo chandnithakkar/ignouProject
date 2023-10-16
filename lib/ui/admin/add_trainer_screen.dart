@@ -149,7 +149,7 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                           GetTextFormField(
                             isObscureText: false,
                             hintText: "Enter Trainer Experience in years",
-                            labelText: "Trainer Achievements",
+                            labelText: "Trainer experience",
                             controller: addTrainerController.trainerExperienceController,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,

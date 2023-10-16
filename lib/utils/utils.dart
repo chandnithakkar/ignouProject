@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 
 class U {
   static loader(context) {
@@ -21,6 +22,19 @@ class U {
         ),
       ),
     );
+  }
+  static double getScreenHeight(BuildContext context) {
+    return MediaQuery.of(context).size.height;
+  }
+
+  static double getScreenWidth(BuildContext context) {
+    return MediaQuery.of(context).size.width;
+  }
+
+  static String convertiEnDateEtHeure(n) {
+    String date = DateFormat('yyyy-MM-dd').format(n);
+
+    return date;
   }
   static showToast(message) => Fluttertoast.showToast(
       msg: message,
@@ -68,7 +82,7 @@ class U {
 
   static addHorBox({size = 10.0}) {
     return SizedBox(
-      width: size.sp,
+      width: size,
     );
   }
 }

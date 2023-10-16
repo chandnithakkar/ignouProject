@@ -38,7 +38,6 @@ class AppIcons {
   //PNG and JPG
   static const String back = 'assets/images/back.png';
   static const String textlogoWhite = 'assets/images/textLogo_white.png';
-
   static const String bike = 'assets/images/bike.jpg';
 
   //Profile
@@ -78,5 +77,11 @@ class AppIcons {
   static const String dog_training1 = 'assets/images/dog_training1.jpg';
   static const String dog_training2 = 'assets/images/dog_training2.jpg';
   static const String dog_training3 = 'assets/images/dog_training3.jpg';
+
+  static const String bulldog = 'assets/images/bulldog.jpg';
+  static const String lab = 'assets/images/lab.jpg';
+  static const String german = 'assets/images/german.jpg';
+  static const String doberman = 'assets/images/doberman.jpg';
+
 
 }

@@ -21,7 +21,7 @@ class AdminLoginScreen extends StatefulWidget {
 }
 
 class _AdminLoginScreenState extends State<AdminLoginScreen> {
-  final LoginController _loginController = Get.put((LoginController()));
+  final AdminLoginController _loginController = Get.put((AdminLoginController()));
   bool obscureText = true;
   String errorMessage = '';
 
@@ -82,7 +82,7 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
         ),
         body: SingleChildScrollView(
             child: Form(
-                key: _loginController.formKey3,
+                key: _loginController.formKey4,
                 child: Container(
                     decoration: BoxDecoration(
                         gradient: LinearGradient(
@@ -187,17 +187,6 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                             ),
                           ),
                           U.addVerBox(size: 20),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Text(
-                              "Admin Login",
-                              style: St.textFontRegular(
-                                  color: CC.primaryColor,
-                                  size: 16.sp,
-                                  weight: FontWeight.w400),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
                         ],
                       ),
                     ))))));
@@ -252,7 +241,7 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
   }
 
   void showAlertDialog(BuildContext context, String message) {
-    // set up the AlertDialog
+
     final CupertinoAlertDialog alert = CupertinoAlertDialog(
       title: const Text('Error'),
       content: Text('\n$message'),

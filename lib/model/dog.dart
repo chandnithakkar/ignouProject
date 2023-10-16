@@ -1,15 +1,17 @@
 class Dog {
-  final String dogAchievements;
-  final String dogAge;
-  final String dogBreed;
-  final String dogName;
-  final String dogPriceWTrainer;
-  final String dogPriceWoutTrainer;
-  final String trainerId;
+   String? dogAchievements="";
+   String? dogAge="";
+   String? dogID="";
+   String? dogBreed="";
+   String? dogName="";
+   String? dogPriceWTrainer="";
+   String? dogPriceWoutTrainer="";
+   String? trainerId="";
 
   Dog({
     required this.dogAchievements,
     required this.dogAge,
+   required this.dogID,
     required this.dogBreed,
     required this.dogName,
     required this.dogPriceWTrainer,
@@ -21,6 +23,7 @@ class Dog {
     return Dog(
       dogAchievements: json['dogAchievements'],
       dogAge: json['dogAge'],
+      dogID: json['dogID'],
       dogBreed: json['dogBreed'],
       dogName: json['dogName'],
       dogPriceWTrainer: json['dogPriceWTrainer'],
@@ -33,6 +36,7 @@ class Dog {
     return {
       'dogAchievements': dogAchievements,
       'dogAge': dogAge,
+      'dogID': dogID,
       'dogBreed': dogBreed,
       'dogName': dogName,
       'dogPriceWTrainer': dogPriceWTrainer,

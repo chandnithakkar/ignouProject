@@ -6,8 +6,12 @@ import 'package:ignou_project/ui/admin/admin_dashboard.dart';
 import 'package:ignou_project/ui/auth/admin_login.dart';
 import 'package:ignou_project/ui/auth/login.dart';
 import 'package:ignou_project/ui/auth/register.dart';
+import 'package:ignou_project/ui/user/booking_screen.dart';
 import '../ui/auth/verify_otp_screen.dart';
 import '../ui/splash_screen.dart';
+import '../ui/user/dogs_details.dart';
+import '../ui/user/dogs_list_screen.dart';
+import '../ui/user/payment_screen.dart';
 import '../ui/user/user_dashboard.dart';
 part 'app_routes.dart';
 
@@ -57,6 +61,22 @@ class AppPages {
     GetPage(
         name: Routes.UserDashboard,
         page: () => UserDashboard(),
+        transition: Transition.downToUp),
+    GetPage(
+        name: Routes.dogDetailsScreen,
+        page: () => DogDetailsScreen(),
+        transition: Transition.downToUp),
+    GetPage(
+            name: Routes.DogsList,
+        page: () => DogListScreen(),
+        transition: Transition.downToUp),
+    GetPage(
+        name: Routes.bookingScreen,
+        page: () => BookingScreen(),
+        transition: Transition.downToUp),
+    GetPage(
+        name: Routes.paymentScreen,
+        page: () => PaymentScreen(),
         transition: Transition.downToUp),
   ];
 }

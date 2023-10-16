@@ -21,15 +21,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
   final LoginController _loginController = Get.put((LoginController()));
   bool obscureText = true;
   String errorMessage = '';
 
   @override
   Widget build(BuildContext context) {
-/*
     return Obx(() {
-*/
     return Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: Colors.white,
@@ -179,6 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               loadingText: "Please wait",
                               callback: () {
                                 FocusManager.instance.primaryFocus?.unfocus();
+                                _loginController.isLoading.value=true;
                                 generateOtp(
                                     "+91" +
                                         _loginController.phoneController.text,
@@ -214,9 +214,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                     ))))));
-/*
     });
-*/
   }
 
   Future<void> generateOtp(String contact, BuildContext context) async {
@@ -235,8 +233,10 @@ class _LoginScreenState extends State<LoginScreen> {
         codeSent: (String verificationId, int? resendToken) async {
           _loginController.isLoading.value = false;
           print(" verificationId------------------------->");
-          var result = await Get.toNamed(Routes.verifyOtp,
-              arguments: {"credentials": verificationId, "contact": contact});
+          var result = await Get.toNamed(Routes.verifyOtp, arguments: {"credentials": verificationId, "contact": contact});
+          print("result ------------${result}------------->");
+          Get.offAllNamed(Routes.UserDashboard);
+
         },
         codeAutoRetrievalTimeout: (String verificationId) {
           _loginController.isLoading.value = false;

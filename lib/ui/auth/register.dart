@@ -312,19 +312,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
       final DatabaseReference userRef = FirebaseDatabase.instance.ref("users").child(userId);
 
       // Create a Map to represent the user data
-      final Map<String, dynamic> userData = {
+        final Map<String, dynamic> userData = {
         "first_name": firstName,
         "last_name": lastName,
         "address": address,
         "phone": phone,
-        // Add any other user data you want to store
       };
 
       // Set the user data in the database
       userRef.set(userData).then((_) {
-          print("User data added to Firebase Database.");
-
-      Get.offAll(Routes.UserDashboard);
+        U.showToast("Registration successfull");
+        print("User data added to Firebase Database.");
+        Get.offAllNamed(Routes.UserDashboard);
       }).catchError((error) {
         print("Error adding user data to Firebase Database: $error");
         // Handle the error here
@@ -341,8 +340,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         smsCode: smsCode,
       );
 
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(authCreds);
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(authCreds);
 
       User? user = userCredential.user;
 

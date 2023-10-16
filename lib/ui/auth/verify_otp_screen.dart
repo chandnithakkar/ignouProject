@@ -34,7 +34,7 @@ class _VerifyMobileOtpState extends State<VerifyMobileOtp> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
-          leading: InkWell(
+          leading: GestureDetector(
             child: const Icon(
               Icons.arrow_back_ios,
               color: Colors.black,

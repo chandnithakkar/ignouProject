@@ -9,6 +9,8 @@ import '../../utils/common_form_button.dart';
 import '../../utils/common_textfield.dart';
 import '../../utils/font_styles.dart';
 import '../../utils/utils.dart';
+import 'package:uuid/uuid.dart';
+
 
 class AddDogScreen extends StatefulWidget {
   AddDogScreen({Key? key}) : super(key: key);
@@ -105,6 +107,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
                             hintText: "Enter Dog Age",
                             labelText: "Dog Age",
                             controller: addDogController.dogAgeController,
+                            inputType: TextInputType.number,
                             autovalidateMode:
                             AutovalidateMode.onUserInteraction,
                             validator: (value) {
@@ -168,27 +171,52 @@ class _AddDogScreenState extends State<AddDogScreen> {
                                 },
                               )),
                           U.addVerBox(size: 20),
-
-                          GetTextFormField(
-                            isObscureText: false,
-                            hintText: "Enter Dog Achievements",
-                            labelText: "Dog Achievements",
-                            controller: addDogController.dogAchievementsController,
-                            autovalidateMode:
-                            AutovalidateMode.onUserInteraction,
-                            validator: (value) {
-                              if (value != null) {
-                                if (value.isEmpty) {
-                                  return AppConstants.errorDogAchievements;
-                                }
-                              }
-                              /*  if (!Utils.isEmail(value.toString())) {
-                                return AppConstants.validEmail;
-                              }
-*/
-                              return null;
-                            },
-                          ),
+                          Container(
+                              height: 54.sp,
+                              padding: const EdgeInsets.only(right: 20.0),
+                              alignment: Alignment.centerRight,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color:  CC.borderColor,
+                                  ),
+                                  borderRadius: BorderRadius.all(Radius.circular(20))),
+                              child: DropdownButton(
+                                isExpanded: true,
+                                underline: Container(
+                                  color: Colors.transparent,
+                                ),
+                                hint: Container(
+                                  padding: EdgeInsets.only(left: 16.sp),
+                                  child: Text("Select service",
+                                      style: St.RegulareNoteText(
+                                          16.sp)),
+                                ),
+                                value: addDogController.selectedDogService.value == "" ? null : addDogController.selectedDogService.value,
+                                items: addDogController.dropDownDogsSErvice.value
+                                    .map((value) {
+                                  return DropdownMenuItem(
+                                    value: value,
+                                    child: Text(value.toString(),
+                                        style: St.RegulareNoteText(
+                                            16.sp)),
+                                  );
+                                }).toList(),
+                                selectedItemBuilder: (BuildContext context) {
+                                  return (addDogController.dropDownDogsSErvice.value)
+                                      .map<Widget>((item) {
+                                    return Padding(
+                                        padding: EdgeInsets.only(left:16.sp,top: 12.sp),
+                                        child: Text(item,
+                                            style: St.RegulareNoteText(
+                                                16.sp)));
+                                  }).toList();
+                                },
+                                onChanged: (val) {
+                                  addDogController.selectedDogService.value = val.toString();
+                                  print("selected value " + val.toString());
+                                  //    _orderDetailsController.loadListApi();
+                                },
+                              )),
                           U.addVerBox(size: 20),
                           GetTextFormField(
                             isObscureText: false,
@@ -216,6 +244,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
                             hintText: "Enter Dog's price with Trainer",
                             labelText: "Dog's price with Trainer",
                             controller: addDogController.dogPriceWithController,
+                            inputType: TextInputType.number,
                             autovalidateMode:
                             AutovalidateMode.onUserInteraction,
                             validator: (value) {
@@ -237,6 +266,7 @@ class _AddDogScreenState extends State<AddDogScreen> {
                             hintText: "Enter Dog's price without Trainer",
                             labelText: "Dog's price without Trainer",
                             controller: addDogController.dogPriceWithOutController,
+                            inputType: TextInputType.number,
                             autovalidateMode:
                             AutovalidateMode.onUserInteraction,
                             validator: (value) {
@@ -262,10 +292,13 @@ class _AddDogScreenState extends State<AddDogScreen> {
                               loadingText: "Please wait",
                               callback: () async {
                                 FocusManager.instance.primaryFocus?.unfocus();
-
+                                final uuid = Uuid();
+                                final dogId = uuid.v4();
                                 // Create a map of dog details
                                 Map<String, dynamic> dogDetails = {
+                                  "dogID":dogId,
                                   "dogBreed": addDogController.selectedDogBreed.value,
+                                  "dogServices": addDogController.selectedDogService.value,
                                   "dogName": addDogController.dogNameController.text,
                                   "dogAge": addDogController.dogAgeController.text,
                                   "dogAchievements": addDogController.dogAchievementsController.text,
