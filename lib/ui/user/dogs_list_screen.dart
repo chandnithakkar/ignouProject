@@ -1,21 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import '../../model/dog.dart';
-import '../../utils/app_colors.dart';
-import 'dogs_details.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:get/get.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_database/firebase_database.dart';
-
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import '../../model/dog.dart';
-import '../../model/trainer.dart';
-import '../../route/app_pages.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_icons.dart';
-import '../../utils/font_styles.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import '../../utils/utils.dart';
 import 'dogs_details.dart';
 

@@ -33,9 +33,13 @@ class U {
 
   static String convertiEnDateEtHeure(n) {
     String date = DateFormat('yyyy-MM-dd').format(n);
-
     return date;
   }
+  static DateTime convertiEnDateEtHeure1(String date) {
+    return DateFormat('yyyy-MM-dd').parse(date);
+  }
+
+
   static showToast(message) => Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,

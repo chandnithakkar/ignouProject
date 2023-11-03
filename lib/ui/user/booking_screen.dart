@@ -273,7 +273,43 @@ class _BookingScreenState extends State<BookingScreen> {
                                 enabled: !bookingController.isLoading.value,
                                 loadingText: "Please wait",
                                 callback: () async {
-                                  Get.toNamed(Routes.paymentScreen);
+                                  DateTime? startDate = bookingController
+                                          .startDateController.text.isEmpty
+                                      ? null
+                                      : U.convertiEnDateEtHeure1(
+                                          bookingController
+                                              .startDateController.text);
+
+                                  DateTime? endDate = bookingController
+                                          .endDateController.text.isEmpty
+                                      ? null
+                                      : U.convertiEnDateEtHeure1(
+                                          bookingController
+                                              .endDateController.text);
+
+                                  if (bookingController
+                                          .startDateController.text ==
+                                      "") {
+                                    U.showToast("Please select start date");
+                                  } else if (bookingController
+                                          .endDateController.text ==
+                                      "") {
+                                    U.showToast("Please select end date");
+                                  } else if (startDate == null ||
+                                      endDate == null) {
+                                    if (endDate!.isBefore(startDate!) ||
+                                        endDate.isAtSameMomentAs(startDate)) {
+                                      U.showToast(
+                                          "End date must be after the start date.");
+                                    }
+                                  }
+                                  else if(bookingController.addressController.text==""){
+                                    U.showToast("Please enter address.");
+                                  }
+                                  else{
+                                    Get.toNamed(Routes.paymentScreen);
+                                  }
+
                                 },
                               ),
                             ),
