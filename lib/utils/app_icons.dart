@@ -82,6 +82,7 @@ class AppIcons {
   static const String lab = 'assets/images/lab.jpg';
   static const String german = 'assets/images/german.jpg';
   static const String doberman = 'assets/images/doberman.jpg';
+  static const String orderSuccess = 'assets/images/orderSuccess.jpg';
 
 
 }

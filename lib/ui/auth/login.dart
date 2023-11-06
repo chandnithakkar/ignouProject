@@ -235,6 +235,10 @@ class _LoginScreenState extends State<LoginScreen> {
           print(" verificationId------------------------->");
           var result = await Get.toNamed(Routes.verifyOtp, arguments: {"credentials": verificationId, "contact": contact});
           print("result ------------${result}------------->");
+          UserCredential data=result;
+          U.showToast("user id --> ${data.user?.uid}");
+
+         await _loginController.storageService.setString(AppConstants.uidPref,data.user?.uid??"" );
           Get.offAllNamed(Routes.UserDashboard);
 
         },

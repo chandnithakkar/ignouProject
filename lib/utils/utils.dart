@@ -1,9 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ignou_project/utils/storage_service.dart';
+import '../route/app_pages.dart';
 import 'app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:get/get.dart';
+
+import 'app_constants.dart';
 
 class U {
   static loader(context) {
@@ -23,6 +30,56 @@ class U {
       ),
     );
   }
+  static void getLogoutDialog(context) {
+    Platform.isAndroid
+        ? Get.dialog(
+      AlertDialog(
+        title: Text('Are you sure you want to logout?'),
+        actions: [
+          TextButton(
+            child: Text(AppConstants.yes),
+            onPressed: () {
+              Navigator.of(Get.overlayContext!, rootNavigator: true)
+                  .pop(AppConstants.logout);                    //  Get.back();
+              StorageService().clearData();
+              Get.offNamedUntil(Routes.login, (route) => false);
+            },
+          ),
+          TextButton(
+            child: Text(AppConstants.no),
+            onPressed: () {
+              Navigator.of(Get.overlayContext!, rootNavigator: true)
+                  .pop(AppConstants.logout);                  },
+          ),
+        ],
+      ),
+      barrierDismissible: false,
+    )
+        : Get.dialog(
+      CupertinoAlertDialog(
+        title: Text('Are you sure you want to logout?'),
+        actions: [
+          CupertinoDialogAction(
+            child: Text(AppConstants.yes),
+            onPressed: () {
+              Navigator.of(Get.overlayContext!, rootNavigator: true)
+                  .pop(AppConstants.logout);
+              StorageService().clearData();
+              Get.offNamedUntil(Routes.login, (route) => false);
+            },
+          ),
+          CupertinoDialogAction(
+            child: Text(AppConstants.no),
+            onPressed: () {
+              Navigator.of(Get.overlayContext!, rootNavigator: true)
+                  .pop(AppConstants.logout);                  },
+          )
+        ],
+      ),
+      barrierDismissible: false,
+    );
+  }
+
   static double getScreenHeight(BuildContext context) {
     return MediaQuery.of(context).size.height;
   }

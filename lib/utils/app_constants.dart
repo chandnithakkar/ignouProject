@@ -7,10 +7,13 @@ class AppConstants {
   static const String fontFamilyOxygen = "Oxygen";
 
   static const String configDataPREF = "configDataPREF";
+  static const String uidPref = 'uidPref';
+
   static const String otp_resend_time = "otp_resend_time";
   static const String otp_expired_time = "otp_expired_time";
 
   static const String usertypeValue = "1";
+  static const String no = 'No';
 
   //keys
   static const String deviceTypeK = "device_type";

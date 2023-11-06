@@ -105,6 +105,7 @@ class _UserMenuScreenState extends State<UserMenuScreen> {
                 padding: const EdgeInsets.only(bottom: 20.0),
                 child: ElevatedButton(
                   onPressed: () {
+                    U.getLogoutDialog(context);
                     // Handle Logout action
                   },
                   child: Text("Logout"),
