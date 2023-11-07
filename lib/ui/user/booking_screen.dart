@@ -330,7 +330,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                       "dogID":widget.dog?.dogID,
                                       "startDate":bookingController.startDateController.text,
                                       "endDate":bookingController.endDateController.text,
-                                      "payMode":bookingController.selectedOptionPay.value,
+                                        "payMode":bookingController.selectedOptionPay.value,
                                       "withWithoutTrainer":bookingController.selectedOptiontrainer.value,
                                       "address":bookingController.addressController.text,
                                       "price":price,
@@ -407,7 +407,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                                                             callback:
                                                                                 () async {
                                                                                   await databaseReference.push().set(orderDetails);
-                                                                          Navigator.of(context).pop();
+                                                                              Navigator.of(context).pop();
 
                                                                               Get.offAllNamed(Routes.UserDashboard);
                                                                             })

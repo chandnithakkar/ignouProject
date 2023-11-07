@@ -97,7 +97,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       title: Text("Orders"),
                       onTap: () {
                         _myDrawerController.toggleDrawer();
-                        Get.toNamed(Routes.addTrainerScreen);
+                        Get.toNamed(Routes.orderListScreen);
                         // Handle Add Trainer action
                       },
                     ),
@@ -390,12 +390,30 @@ class _MainScreenState extends State<MainScreen> {
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(
-            'Dogs',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Dogs',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: (){
+                  Get.toNamed(Routes.adminDogsList);
+                },
+                child: Text(
+                  "See All",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black, // Customize text color
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
         Container(
@@ -405,10 +423,10 @@ class _MainScreenState extends State<MainScreen> {
             itemCount: dogsList.value.length,
             itemBuilder: (context, index) {
               return Container(
-                width: 150, // Adjust the width as needed
-                margin: EdgeInsets.all(8),
+                width: 150.sp, // Adjust the width as needed
+                margin: EdgeInsets.all(8.sp),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12.sp),
                     gradient: LinearGradient(
                       colors: [CC.primaryColor, CC.secondaryColor, CC.thirdColor],
                       begin: Alignment.centerLeft,

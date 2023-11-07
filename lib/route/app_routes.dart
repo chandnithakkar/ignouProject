@@ -16,5 +16,7 @@ abstract class Routes {
   static const String DogsList= "/DogsList";
   static const String bookingScreen = "/bookingScreen";
   static const String paymentScreen = "/paymentScreen";
+  static const String orderListScreen= "/orderListScreen";
+  static const String adminDogsList= "/adminDogsList";
 
 }

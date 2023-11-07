@@ -88,7 +88,7 @@ class _UserMenuScreenState extends State<UserMenuScreen> {
                     ListTile(
                       title: Text("Orders"),
                       onTap: () {
-                        Get.toNamed(Routes.addTrainerScreen);
+                        Get.toNamed(Routes.orderListScreen);
                         // Handle Add Trainer action
                       },
                     ),

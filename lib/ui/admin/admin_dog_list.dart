@@ -6,14 +6,13 @@ import '../../model/dog.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_icons.dart';
 import '../../utils/utils.dart';
-import 'dogs_details.dart';
 
-class DogListScreen extends StatefulWidget {
+class AdminDogListScreen extends StatefulWidget {
   @override
-  State<DogListScreen> createState() => _DogListScreenState();
+  State<AdminDogListScreen> createState() => _AdminDogListScreenState();
 }
 
-class _DogListScreenState extends State<DogListScreen> {
+class _AdminDogListScreenState extends State<AdminDogListScreen> {
   var dropDownDogsService = <String>["Army", "Sniffer", "Guide","Other"].obs;
   var dogsList=<Dog>[].obs;
 
@@ -39,7 +38,7 @@ class _DogListScreenState extends State<DogListScreen> {
       final transformedData = transformDogsFirebaseData(data);
 
       // Deserialize and add each dog entry to the list
-        for (final entry in transformedData.entries) {
+      for (final entry in transformedData.entries) {
         try {
           final dog = Dog.fromJson(entry.value);
           dogs.add(dog);
@@ -81,28 +80,28 @@ class _DogListScreenState extends State<DogListScreen> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-       () {
-        return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            leading: GestureDetector(
-              child: const Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
+            () {
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              leading: GestureDetector(
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.black,
+                ),
+                onTap: () {
+                  Get.back();
+                },
               ),
-              onTap: () {
-                Get.back();
-              },
+              title: Text('Dogs List',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),),
             ),
-            title: Text('Dogs List',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black,
-              ),),
-          ),
-          body: DogsList(),
-        );
-      }
+            body: DogsList(),
+          );
+        }
     );
   }
 
@@ -113,7 +112,7 @@ class _DogListScreenState extends State<DogListScreen> {
       child: ListView.builder(
         itemCount: dogsList.value.length,
         itemBuilder: (context, index) {
-          return DogListItem(
+          return AdminDogListItem(
             dog: dogsList.value[index],
           );
         },
@@ -137,23 +136,23 @@ class _DogListScreenState extends State<DogListScreen> {
   }
 }*/
 
-class DogListItem extends StatelessWidget {
+class AdminDogListItem extends StatelessWidget {
   final Dog dog;
 
-  DogListItem({required this.dog});
+  AdminDogListItem({required this.dog});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => DogDetailsScreen(dog: dog));
+       // Get.to(() => DogDetailsScreen(dog: dog));
       },
       child: Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration (
           borderRadius: BorderRadius.circular(12),
           gradient: LinearGradient(
-            colors: [CC.primaryColor, CC.secondaryColor, CC.thirdColor],
+            colors: [Colors.black26, Colors.black12, Colors.black45],
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
           ),
@@ -161,21 +160,29 @@ class DogListItem extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-        Material(
-          elevation: 4,
-          borderRadius: BorderRadius.circular(12.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(12.0),
-              child: Image.asset(
-                AppIcons.lab, // Replace with your image URL
-                width: 120, // Adjust the image size as needed
-                height: 120,fit: BoxFit.cover,
-              ),
-            ),),
+            Material(
+              elevation: 4,
+              borderRadius: BorderRadius.circular(12.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12.0),
+                child: Image.asset(
+                  AppIcons.lab, // Replace with your image URL
+                  width: 120, // Adjust the image size as needed
+                  height: 120,fit: BoxFit.cover,
+                ),
+              ),),
             SizedBox(width: 10,),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Icon(Icons.edit,color:CC.black53,),
+                    SizedBox(width: 10,),
+                    Icon(Icons.delete,color:CC.black53,)
+                  ],
+                ),
                 Text(
                   dog.dogName ?? "",
                   style: TextStyle(
