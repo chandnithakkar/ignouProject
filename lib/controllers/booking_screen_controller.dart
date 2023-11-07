@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import '../utils/storage_service.dart';
 import 'base_controller.dart';
 import 'package:get/get.dart';
 
@@ -15,6 +16,7 @@ class BookingScreenController extends BaseController {
   TextEditingController startDateController= TextEditingController();
   TextEditingController endDateController= TextEditingController();
   TextEditingController addressController= TextEditingController();
+  final StorageService storageService = StorageService();
 
   var selectedOptiontrainer = 'withTrainer'.obs;
   var selectedOptionPay = 'cod'.obs;

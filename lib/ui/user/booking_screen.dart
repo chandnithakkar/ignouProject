@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:ignou_project/utils/app_constants.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -321,10 +322,11 @@ class _BookingScreenState extends State<BookingScreen> {
                                     FocusManager.instance.primaryFocus?.unfocus();
                                     final uuid = Uuid();
                                     final orderID = uuid.v4();
+                                    var userID=await bookingController.storageService.getString(AppConstants.uidPref);
                                     // Create a map of dog details
                                     Map<String, dynamic> orderDetails = {
                                       "orderID":orderID,
-                                      "userID":"1",//currently static
+                                      "userID":"${userID}",//currently static
                                       "dogID":widget.dog?.dogID,
                                       "startDate":bookingController.startDateController.text,
                                       "endDate":bookingController.endDateController.text,

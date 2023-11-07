@@ -145,7 +145,7 @@ class _VerifyMobileOtpState extends State<VerifyMobileOtp> {
         print("signInWithCredential --------->");
         UserCredential cred=value;
         cred.user?.uid;
-        Map data = {"user": value};
+          Map data = {"user": value};
         Get.back(result: data);
         _verifyOtpController.isLoading.value = false;
       }).catchError((e) {
