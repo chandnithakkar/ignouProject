@@ -1,4 +1,3 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,6 +5,7 @@ import '../../model/dog.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_icons.dart';
 import '../../utils/utils.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class AdminDogListScreen extends StatefulWidget {
   @override
@@ -178,18 +178,20 @@ class AdminDogListItem extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    Text(
+                      dog.dogName ?? "",
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Spacer(),
                     Icon(Icons.edit,color:CC.black53,),
                     SizedBox(width: 10,),
                     Icon(Icons.delete,color:CC.black53,)
                   ],
                 ),
-                Text(
-                  dog.dogName ?? "",
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    color: Colors.white,
-                  ),
-                ),
+
                 U.addGap(10),
                 Text(
                   "Price without Trainer: \$${dog.dogPriceWoutTrainer}", // Replace with the actual price

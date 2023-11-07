@@ -24,7 +24,7 @@ class BookingScreenController extends BaseController {
   var selectedDogService = "".obs;
   var dropDownDogsSErvice = <String>["Army", "Sniffer", "Guide","Other"].obs;
   var dateData = <DateTime>[].obs;
-  int totalDays = 34;
+    int totalDays = 34;
   var dateFormatDisplay = 'yyyy-MM-dd';
   var datetimeFormat = 'yyyy-MM-dd hh:mm:ss';
   var dateFormatBooking = 'dd/MM/yyyy HH:mm';
