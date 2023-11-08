@@ -159,6 +159,7 @@ class AdminDogListItem extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Material(
               elevation: 4,
@@ -175,41 +176,66 @@ class AdminDogListItem extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      dog.dogName ?? "",
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Spacer(),
-                    Icon(Icons.edit,color:CC.black53,),
-                    SizedBox(width: 10,),
-                    Icon(Icons.delete,color:CC.black53,)
-                  ],
+                U.addGap(5),
+                Text(
+                  dog.dogName ?? "",
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    color: Colors.black,
+                  ),
                 ),
-
-                U.addGap(10),
+                U.addGap(20),
                 Text(
                   "Price without Trainer: \$${dog.dogPriceWoutTrainer}", // Replace with the actual price
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
                 Text(
                   "Price with Trainer: \$${dog.dogPriceWTrainer}", // Replace with the actual price
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
               ],
             ),
-
+            Padding(
+              padding: EdgeInsets.only(top:8.0),
+              child: Icon(Icons.edit,color:CC.black,),
+            ),
+            SizedBox(width: 10,),
+            GestureDetector(
+              onTap: (){
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('Delete'),
+                        content: const Text('Are you sure you want to delete this dog?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('Yes'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text('No'),
+                          ),
+                        ],
+                      );
+                    });
+              },
+              child: Padding(
+                padding: EdgeInsets.only(top:8.0),
+                child: Icon(Icons.delete,color:CC.black,),
+              ),
+            )
           ],
         ),
       ),

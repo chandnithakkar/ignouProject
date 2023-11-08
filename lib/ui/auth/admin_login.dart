@@ -150,23 +150,32 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                                   controller: _loginController.phoneController,
                                   hintText: "Enter Phone Number",
                                   labelText: "Phone Number",
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
                                   inputType: TextInputType.number,
                                   validator: (value) {
-                                    if (value != null) {
+                                   /* if (value != null) {
                                       if (value.isEmpty) {
                                         return AppConstants.errorMobile;
                                       }
                                       if (value.length != 10) {
                                         return AppConstants.validPhone;
                                       }
-                                    }
+                                    }*/
                                     return null;
                                   },
                                 ),
                               ),
                             ],
+                          ),
+                          U.addVerBox(size: 20),
+                          GetTextFormField(
+                            isObscureText: true,
+                            controller: _loginController.password,
+                            hintText: "Enter password",
+                            labelText: "password",
+                            inputType: TextInputType.number,
+                            validator: (value) {
+                              return null;
+                            },
                           ),
                           U.addVerBox(size: 20),
                           Padding(
@@ -178,11 +187,19 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                               loadingText: "Please wait",
                               callback: () {
                                 FocusManager.instance.primaryFocus?.unfocus();
-                                Get.offNamed(Routes.adminDashboard);
-                                /* generateOtp(
-                                    "+91" +
-                                        _loginController.phoneController.text,
-                                    context);*/
+                                if (_loginController.phoneController.text == "") {
+                                  U.showToast("please enter phone number");
+                                }else if(_loginController.phoneController.text.length!=10){
+                                  U.showToast("please enter valid phone number");
+                                }else if(_loginController.password.text==""){
+                                  U.showToast("please enter password");
+                                }else if(_loginController.phoneController.text!="9876543210"){
+                                  U.showToast("Admin phone number is wrong");
+                                }else if(_loginController.password.text!="0123456789"){
+                                  U.showToast("Admin password is wrong");
+                                }else{
+                                  Get.offAllNamed(Routes.adminDashboard);
+                                }
                               },
                             ),
                           ),

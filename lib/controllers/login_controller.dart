@@ -11,7 +11,7 @@ class LoginController extends BaseController {
 }
 class AdminLoginController extends BaseController {
   var formKey4 = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController password = TextEditingController();
   TextEditingController phoneController = TextEditingController();
 //final StorageService storageService = StorageService();
 }

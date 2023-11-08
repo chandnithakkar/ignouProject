@@ -8,6 +8,7 @@ import 'package:ignou_project/ui/auth/login.dart';
 import 'package:ignou_project/ui/auth/register.dart';
 import 'package:ignou_project/ui/user/booking_screen.dart';
 import '../ui/admin/admin_dog_list.dart';
+import '../ui/admin/admin_trainer_list.dart';
 import '../ui/auth/verify_otp_screen.dart';
 import '../ui/splash_screen.dart';
 import '../ui/user/dogs_details.dart';
@@ -87,6 +88,10 @@ class AppPages {
     GetPage(
         name: Routes.adminDogsList,
         page: () => AdminDogListScreen(),
+        transition: Transition.downToUp),
+    GetPage(
+        name: Routes.adminTrainerListScreen,
+        page: () => AdminTrainerListScreen(),
         transition: Transition.downToUp),
   ];
 }

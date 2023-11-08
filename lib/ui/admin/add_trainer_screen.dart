@@ -179,7 +179,7 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                 FocusManager.instance.primaryFocus?.unfocus();
 
                                 // Create a map of dog details
-                                Map<String, dynamic> dogDetails = {
+                                Map<String, dynamic> trainerDetails = {
                                   "trainerName":
                                       addTrainerController.trainerNameController.text,
                                   "trainerSpecialization":
@@ -197,7 +197,7 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                                   // Push the dog details to the Firebase Realtime Database
                                   await databaseReference
                                       .push()
-                                      .set(dogDetails);
+                                      .set(trainerDetails);
                                   U.showToast("Trainer details added successfully");
                                 } catch (e) {
                                   U.showToast("Error adding trainer details: $e");

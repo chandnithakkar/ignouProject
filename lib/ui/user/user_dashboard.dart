@@ -12,6 +12,7 @@ import '../../utils/app_icons.dart';
 import '../../utils/font_styles.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../../utils/utils.dart';
+import '../admin/trainer_details_screen.dart';
 import 'dogs_details.dart';
 
 class UserDashboard extends StatefulWidget {
@@ -189,12 +190,12 @@ class _MainScreenState extends State<MainScreen> {
                         height: 2,
                       ),
                       U.addGap(20),
-                      ServiceList(),
+                     /* ServiceList(),
                       U.addGap(20),
                       Divider(
                         color: Colors.black38,
                         height: 2,
-                      ),
+                      ),*/
                       U.addGap(20),
                     ],
                   ),
@@ -453,11 +454,29 @@ class _MainScreenState extends State<MainScreen> {
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Trainers',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        GestureDetector(
+          onTap: (){
+            Get.toNamed(Routes.adminTrainerListScreen);
+          },
           child: Text(
-            'Trainers',
+            "See All",
             style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+              fontSize: 14,
+              color: Colors.black, // Customize text color
             ),
           ),
         ),
@@ -467,28 +486,33 @@ class _MainScreenState extends State<MainScreen> {
             scrollDirection: Axis.horizontal,
             itemCount: trainersList.value.length,
             itemBuilder: (context, index) {
-              return Container(
-                width: 150, // Adjust the width as needed
-                margin: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    gradient: LinearGradient(
-                      colors: [CC.primaryColor, CC.secondaryColor, CC.thirdColor],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    )
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      trainersList.value[index].trainerName,
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white, // Customize text color
+              return GestureDetector(
+                onTap: (){
+                  Get.to(()=> TrainerDetailsScreen(trainer: trainersList.value[index],));
+                },
+                child: Container(
+                  width: 150, // Adjust the width as needed
+                  margin: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      gradient: LinearGradient(
+                        colors: [CC.primaryColor, CC.secondaryColor, CC.thirdColor],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      )
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        trainersList.value[index].trainerName,
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white, // Customize text color
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },

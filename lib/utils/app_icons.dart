@@ -9,7 +9,7 @@ class AppIcons {
   static const String heartDisable = 'assets/images/heart_disable.svg';
   static const String heartEnable = 'assets/images/heart_enable.svg';
   static const String commentIcon = 'assets/images/comment_icon.svg';
-  static const String profile = 'assets/images/profile.svg';
+  static const String profile = 'assets/images/profile.png';
   static const String addDisable = 'assets/images/add_disable.svg';
   static const String addEnabled = 'assets/images/add_enable.svg';
   static const String settings = 'assets/images/settings.svg';
@@ -83,6 +83,7 @@ class AppIcons {
   static const String german = 'assets/images/german.jpg';
   static const String doberman = 'assets/images/doberman.jpg';
   static const String orderSuccess = 'assets/images/orderSuccess.jpg';
+  static const String trainer = 'assets/images/trainer.jpg';
 
 
 }

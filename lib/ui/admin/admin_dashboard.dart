@@ -198,13 +198,13 @@ class _MainScreenState extends State<MainScreen> {
                         color: Colors.black38,
                         height: 2,
                       ),
-                      U.addGap(20),
+                     /* U.addGap(20),
                       ServiceList(),
                       U.addGap(20),
                       Divider(
                         color: Colors.black38,
                         height: 2,
-                      ),
+                      ),*/
                       U.addGap(20),
                     ],
                   ),
@@ -458,14 +458,33 @@ class _MainScreenState extends State<MainScreen> {
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(
-            'Trainers',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Trainers',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: (){
+                  Get.toNamed(Routes.adminTrainerListScreen);
+                },
+                child: Text(
+                  "See All",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black, // Customize text color
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
+
         Container(
           height: 100, // Adjust the height as needed
           child: ListView.builder(
@@ -476,7 +495,7 @@ class _MainScreenState extends State<MainScreen> {
                 width: 150, // Adjust the width as needed
                 margin: EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12),
                     gradient: LinearGradient(
                       colors: [CC.primaryColor, CC.secondaryColor, CC.thirdColor],
                       begin: Alignment.centerLeft,
