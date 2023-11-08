@@ -33,7 +33,7 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: Colors.white,
-        bottomNavigationBar: SizedBox(
+    /*    bottomNavigationBar: SizedBox(
           height: 35.sp,
           child: Container(
             color: Colors.red,
@@ -53,12 +53,12 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                     Get.toNamed(Routes.registration,
                         arguments: {"isfrom": "signin"});
 
-                    /*          if (_loginController.isFrom.value == "signup") {
+                    *//*          if (_loginController.isFrom.value == "signup") {
                       Get.back();
                     } else {
                       Get.toNamed(Routes.signUpScreen,
                           arguments: {"isfrom": "signin"});
-                    }*/
+                    }*//*
                   },
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -79,7 +79,7 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
               ),
             ),
           ),
-        ),
+        ),*/
         body: SingleChildScrollView(
             child: Form(
                 key: _loginController.formKey4,

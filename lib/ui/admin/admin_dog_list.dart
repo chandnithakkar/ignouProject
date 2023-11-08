@@ -148,6 +148,7 @@ class AdminDogListItem extends StatelessWidget {
        // Get.to(() => DogDetailsScreen(dog: dog));
       },
       child: Container(
+        width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration (
           borderRadius: BorderRadius.circular(12),
@@ -173,35 +174,37 @@ class AdminDogListItem extends StatelessWidget {
                 ),
               ),),
             SizedBox(width: 10,),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                U.addGap(5),
-                Text(
-                  dog.dogName ?? "",
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    color: Colors.black,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  U.addGap(5),
+                  Text(
+                    dog.dogName ?? "",
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-                U.addGap(20),
-                Text(
-                  "Price without Trainer: \$${dog.dogPriceWoutTrainer}", // Replace with the actual price
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
+                  U.addGap(20),
+                  Text(
+                    "Price without Trainer: \$${dog.dogPriceWoutTrainer}", // Replace with the actual price
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-                Text(
-                  "Price with Trainer: \$${dog.dogPriceWTrainer}", // Replace with the actual price
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
+                  Text(
+                    "Price with Trainer: \$${dog.dogPriceWTrainer}", // Replace with the actual price
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            Padding(
+              Padding(
               padding: EdgeInsets.only(top:8.0),
               child: Icon(Icons.edit,color:CC.black,),
             ),
@@ -235,7 +238,9 @@ class AdminDogListItem extends StatelessWidget {
                 padding: EdgeInsets.only(top:8.0),
                 child: Icon(Icons.delete,color:CC.black,),
               ),
-            )
+            ),
+            SizedBox(width: 5,),
+
           ],
         ),
       ),
