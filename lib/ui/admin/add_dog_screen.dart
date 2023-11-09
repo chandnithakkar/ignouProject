@@ -289,29 +289,46 @@ class _AddDogScreenState extends State<AddDogScreen> {
                               labelText: "Save",
                               isLoading: addDogController.isLoading.value,
                               enabled: !addDogController.isLoading.value,
-                              loadingText: "Please wait",
+                                loadingText: "Please wait",
                               callback: () async {
                                 FocusManager.instance.primaryFocus?.unfocus();
-                                final uuid = Uuid();
-                                final dogId = uuid.v4();
-                                // Create a map of dog details
-                                Map<String, dynamic> dogDetails = {
-                                  "dogID":dogId,
-                                  "dogBreed": addDogController.selectedDogBreed.value,
-                                  "dogServices": addDogController.selectedDogService.value,
-                                  "dogName": addDogController.dogNameController.text,
-                                  "dogAge": addDogController.dogAgeController.text,
-                                  "dogAchievements": addDogController.dogAchievementsController.text,
-                                  "dogPriceWTrainer": addDogController.dogPriceWithController.text,
-                                  "dogPriceWoutTrainer": addDogController.dogPriceWithOutController.text,
-                                  "trainerId": "", // You can set this if you have a way to get the trainer ID
-                                };
-                                try {
-                                  // Push the dog details to the Firebase Realtime Database
-                                  await databaseReference.push().set(dogDetails);
-                                  U.showToast("Dog details added successfully");
-                                } catch (e) {
-                                  U.showToast("Error adding dog details: $e");
+                                if(addDogController.dogNameController.text==""){
+                                  U.showToast("Please enter dog's name");
+                                }else if(addDogController.dogAgeController.text=="") {
+                                  U.showToast("Please enter dog's age");
+                                }else if(addDogController.selectedDogBreed.value=="") {
+                                  U.showToast("Please select dog breed");
+                                }else if(addDogController.selectedDogService.value=="") {
+                                  U.showToast("Please select dog's service");
+                                }else if(addDogController.dogAchievementsController.text=="") {
+                                  U.showToast("Please enter dog's achievements");
+                                }else if(addDogController.dogPriceWithController.text=="") {
+                                  U.showToast("Please enter dog's price with trainer");
+                                }else if(addDogController.dogPriceWithOutController.text=="") {
+                                  U.showToast("Please enter dog's price without trainer");
+                                }else{
+                                  final uuid = Uuid();
+                                  final dogId = uuid.v4();
+                                  // Create a map of dog details
+                                  Map<String, dynamic> dogDetails = {
+                                    "dogID":dogId,
+                                    "dogBreed": addDogController.selectedDogBreed.value,
+                                    "dogServices": addDogController.selectedDogService.value,
+                                    "dogName": addDogController.dogNameController.text,
+                                    "dogAge": addDogController.dogAgeController.text,
+                                    "dogAchievements": addDogController.dogAchievementsController.text,
+                                    "dogPriceWTrainer": addDogController.dogPriceWithController.text,
+                                    "dogPriceWoutTrainer": addDogController.dogPriceWithOutController.text,
+                                    "trainerId": "", // You can set this if you have a way to get the trainer ID
+                                  };
+                                  try {
+                                    // Push the dog details to the Firebase Realtime Database
+                                    await databaseReference.push().set(dogDetails);
+                                    U.showToast("Dog details added successfully");
+                                    Get.back();
+                                  } catch (e) {
+                                    U.showToast("Error adding dog details: $e");
+                                  }
                                 }
                               },
                             ),

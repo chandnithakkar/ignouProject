@@ -18,8 +18,8 @@ class _SplashscreenState extends State<Splashscreen> {
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 5), () {
-       Get.offNamed(Routes.login);
-       //Get.offNamed(Routes.UserDashboard);
+      // Get.offNamed(Routes.login);
+       Get.offNamed(Routes.UserDashboard);
     });
 
      super.initState();

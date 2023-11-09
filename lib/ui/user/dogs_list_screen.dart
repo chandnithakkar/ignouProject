@@ -167,7 +167,7 @@ class DogListItem extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12.0),
               child: Image.asset(
-                AppIcons.lab, // Replace with your image URL
+                dog?.dogBreed=="German"? AppIcons.german:dog?.dogBreed=="Labrador"?AppIcons.lab:dog?.dogBreed=="Bulldog"? AppIcons.bulldog: AppIcons.doberman,
                 width: 120, // Adjust the image size as needed
                 height: 120,fit: BoxFit.cover,
               ),

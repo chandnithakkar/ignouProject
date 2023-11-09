@@ -35,7 +35,7 @@ class UserDashboardScreen extends State<UserDashboard> {
       body: SafeArea(
         child: ZoomDrawer(
           controller: _myDrawerController.zoomDrawerController,
-          menuScreen: UserMenuScreen(),
+          menuScreen: UserMenuScreen(_myDrawerController.zoomDrawerController),
           mainScreen: MainScreen(),
           borderRadius: 24.0,
           showShadow: true,
@@ -49,8 +49,8 @@ class UserDashboardScreen extends State<UserDashboard> {
 }
 
 class UserMenuScreen extends StatefulWidget {
-  const UserMenuScreen({Key? key}) : super(key: key);
-
+  const UserMenuScreen(this.zoomDrawerController, {Key? key}) : super(key: key);
+  final ZoomDrawerController zoomDrawerController;
   @override
   _UserMenuScreenState createState() => _UserMenuScreenState();
 }
@@ -82,7 +82,8 @@ class _UserMenuScreenState extends State<UserMenuScreen> {
                     ListTile(
                         title: Text("Book Services"),
                       onTap: () {
-                        Get.toNamed(Routes.addDogScreen);
+                        Get.toNamed(Routes.DogsList);
+                        widget.zoomDrawerController.close!();
                         // Handle Add Dog action
                       },
                     ),
@@ -90,15 +91,18 @@ class _UserMenuScreenState extends State<UserMenuScreen> {
                       title: Text("Orders"),
                       onTap: () {
                         Get.toNamed(Routes.orderListScreen);
+                        widget.zoomDrawerController.close!();
                         // Handle Add Trainer action
                       },
                     ),
+/*
                     ListTile(
                       title: Text("Explore"),
                       onTap: () {
                         // Handle Add Service action
                       },
                     ),
+*/
                   ],
                 ),
               ),

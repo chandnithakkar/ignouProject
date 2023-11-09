@@ -72,9 +72,11 @@ class _DogDetailsScreenState extends State<DogDetailsScreen> {
                             // Adjust the radius for rounded corners
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(16.0),
-                              child: Image.asset(AppIcons.lab,
-                                  height:
-                                      MediaQuery.of(context).size.height / 4,
+                              child:
+                                //German", "Labrador", "Bulldog","Doberman
+                                Image.asset(
+                                 widget.dog?.dogBreed=="German"? AppIcons.german:widget.dog?.dogBreed=="Labrador"?AppIcons.lab:widget.dog?.dogBreed=="Bulldog"? AppIcons.bulldog: AppIcons.doberman,
+                                  height: MediaQuery.of(context).size.height / 4,
                                   fit: BoxFit.cover,
                                   width: MediaQuery.of(context).size.width),
                             )),
