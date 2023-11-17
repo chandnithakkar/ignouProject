@@ -220,6 +220,8 @@ class AdminDogListItem extends StatelessWidget {
                         actions: [
                           TextButton(
                             onPressed: () {
+                              //dog.dogID
+
                               Navigator.pop(context);
                             },
                             child: const Text('Yes'),

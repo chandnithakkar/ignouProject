@@ -178,29 +178,40 @@ class _AddTrainerScreenState extends State<AddTrainerScreen> {
                               callback: () async {
                                 FocusManager.instance.primaryFocus?.unfocus();
 
-                                // Create a map of dog details
-                                Map<String, dynamic> trainerDetails = {
-                                  "trainerName":
-                                      addTrainerController.trainerNameController.text,
-                                  "trainerSpecialization":
-                                      addTrainerController.trainerSpecializationController.text,
-                                  "trainerDetails":
-                                      addTrainerController.trainerDetailsController.text,
-                                  "trainerAchievements": addTrainerController
-                                      .trainerAchievementsController.text,
-                                  "trainerExperience": addTrainerController
-                                      .trainerExperienceController.text,
-                                  "trainerId": "",
-                                  // You can set this if you have a way to get the trainer ID
-                                };
-                                try {
-                                  // Push the dog details to the Firebase Realtime Database
-                                  await databaseReference
-                                      .push()
-                                      .set(trainerDetails);
-                                  U.showToast("Trainer details added successfully");
-                                } catch (e) {
-                                  U.showToast("Error adding trainer details: $e");
+
+                                if(addTrainerController.trainerNameController.text==""){
+                                  U.showToast("Please enter trainer's name");
+                                }else if(addTrainerController.trainerSpecializationController.text==""){
+                                  U.showToast("Please enter trainer's specialization");
+                                }else if(addTrainerController.trainerDetailsController.text==""){
+                                  U.showToast("Please enter trainer's details");
+                                }else if(addTrainerController.trainerAchievementsController.text==""){
+                                  U.showToast("Please enter trainer's achievements");
+                                }else if(addTrainerController.trainerExperienceController.text==""){
+                                  U.showToast("Please enter trainer's experience");
+                                }else{
+                                  // Create a map of dog details
+                                  Map<String, dynamic> trainerDetails = {
+                                    "trainerName":
+                                    addTrainerController.trainerNameController.text,
+                                    "trainerSpecialization":
+                                    addTrainerController.trainerSpecializationController.text,
+                                    "trainerDetails":
+                                    addTrainerController.trainerDetailsController.text,
+                                    "trainerAchievements": addTrainerController
+                                        .trainerAchievementsController.text,
+                                    "trainerExperience": addTrainerController
+                                        .trainerExperienceController.text,
+                                  };
+                                  try {
+                                    // Push the dog details to the Firebase Realtime Database
+                                    await databaseReference
+                                        .push()
+                                        .set(trainerDetails);
+                                    U.showToast("Trainer details added successfully");
+                                  } catch (e) {
+                                    U.showToast("Error adding trainer details: $e");
+                                  }
                                 }
                               },
                             ),

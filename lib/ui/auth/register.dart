@@ -8,6 +8,7 @@ import '../../controllers/register_controller.dart';
 import '../../route/app_pages.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_constants.dart';
+import '../../utils/app_icons.dart';
 import '../../utils/common_form_button.dart';
 import '../../utils/common_textfield.dart';
 import '../../utils/font_styles.dart';
@@ -99,6 +100,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           children: [
+                            Image.asset(
+                              AppIcons.splash1,
+                              fit: BoxFit.cover,
+                              height: 100.sp,
+                              width: 100.sp,
+                            ),
                             Text(
                               "Register",
                               style: St.RegulareNoteText(35.sp),

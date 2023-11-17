@@ -469,21 +469,22 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                 ),
               ),
+              GestureDetector(
+                onTap: (){
+                  Get.toNamed(Routes.adminTrainerListScreen);
+                },
+                child: Text(
+                  "See All",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black, // Customize text color
+                  ),
+                ),
+              ),
             ],
           ),
         ),
-        GestureDetector(
-          onTap: (){
-            Get.toNamed(Routes.adminTrainerListScreen);
-          },
-          child: Text(
-            "See All",
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.black, // Customize text color
-            ),
-          ),
-        ),
+
         Container(
           height: 100, // Adjust the height as needed
           child: ListView.builder(
